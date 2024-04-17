@@ -11,6 +11,21 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function transactions() {
+        return view('transactions');
+    }
+
+    public function payments() {
+        return view('payments');
+    }
+
+    public function cards() {
+        return view('cards');
+    }
+
+    public function account() {
+        return view('account');
+    }
     /**
      * Display the user's profile form.
      */

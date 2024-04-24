@@ -16,9 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->enum('type', ['checking', 'savings', 'other']);
-            $table->string('account_number')->unique();
-            $table->decimal('balance', 10, 2);  
+            $table->string('account_number')->unique()->default('NB' . mt_rand(100000, 999999));
+            $table->string('routing_number')->default('NCR' . mt_rand(100000, 999999));
+            $table->string('bank_code')->default('NCF-' . mt_rand(100000, 999999));
+            $table->string('iban');
+            $table->decimal('balance', 10, 2)->default(0);
         });
+
     }
 
     /**

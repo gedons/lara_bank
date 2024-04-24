@@ -7,10 +7,25 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Http;
+use App\Models\Account;
+use App\Models\User;
 use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
+    public function dashboard() {
+
+        $user = auth()->user();
+
+        $response = Http::get('https://openexchangerates.org/api/latest.json?app_id=92cb910af0cd4099a38af39aec0bb48e');
+        $data = $response->json();
+        $currencies = $data['rates'];
+
+        return view('dashboard', compact('user','currencies'));
+    }
+
     public function transactions() {
         return view('transactions');
     }
@@ -26,6 +41,15 @@ class ProfileController extends Controller
     public function account() {
         return view('account');
     }
+
+    public function fund() {
+        return view('fund');
+    }
+
+    public function sendFunds() {
+        return view('sendFunds');
+    }
+
     /**
      * Display the user's profile form.
      */

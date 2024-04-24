@@ -14,6 +14,9 @@ class Account extends Model
         'user_id',
         'type',
         'account_number',
+        'routing_number',
+        'iban',
+        'bank_code',
         'balance',
     ];
 

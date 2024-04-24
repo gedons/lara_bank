@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->enum('type', ['deposit', 'withdrawal', 'transfer']);
             $table->decimal('amount', 10, 2);
-            $table->string('payee_payer')->nullable(); // Consider adding a separate table for payees if needed
+            $table->string('payee_payer')->nullable(); 
             $table->text('description')->nullable();
             $table->timestamps();
         });

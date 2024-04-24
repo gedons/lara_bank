@@ -1,2047 +1,658 @@
-<!--Start Layout-->
 <!DOCTYPE html>
-<html
-  lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-  x-data="layout()"
-  :class="{
-  'dark': $store.app.isDark,
-  '': !$store.app.isDark
-}"
->
+<html   lang="en" >
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+	<!-- Required meta tags -->
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<!-- Favicon icon-->
+<link rel="shortcut icon" type="image/png" href="{{asset('blolgo.png')}}" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+  rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<!-- Core Css -->
+<link rel="stylesheet" href="{{asset('assets/css/theme.css')}}" />
+<title>Client Dashboard - {{ config('app.name', 'Laravel') }}</title>
+</head>
 
-     <!-- Fonts -->
-     <link rel="preconnect" href="https://fonts.bunny.net">
-     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<body class=" bg-white">
+	<main>
+		<!--start the project-->
+		<div id="main-wrapper" class=" flex">
 
-    <script type="module" src="main-362f7ad5.js"></script>
-    <link rel="stylesheet" href="main-6894412f.css">
-  </head>
-  <body class="font-sans antialiased w-full h-full bg-white dark:bg-muted-900">
-    <!-- prettier-ignore -->
+			<aside id="application-sidebar-brand"
+				class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full  transform hidden xl:block xl:translate-x-0 xl:end-auto xl:bottom-0 fixed top-0 with-vertical h-screen z-[999] flex-shrink-0 border-r-[1px] w-[270px] border-gray-400  bg-white left-sidebar   transition-all duration-300" >
+				<!-- ---------------------------------- -->
+                <!-- Start Vertical Layout Sidebar -->
+                <!-- ---------------------------------- -->
+                <div class="p-5" >
+                    <a href="/" class="text-nowrap">
+                        <img
+                        style="width: 100px; margin-bottom: -50px;"
+                        src="blolgo.png"
+                        alt="Logo-Dark"
+                        />
+                    </a>
+                </div>
+                <div class="scroll-sidebar" data-simplebar="">
+                <div class="px-6 mt-8" >
+                    <nav class=" w-full flex flex-col sidebar-nav">
+                    <ul  id="sidebarnav" class="text-gray-600 text-sm">
+                        <li class="text-xs font-bold pb-4">
+                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                        <span>HOME</span>
+                        </li>
 
-    <!--Site sidebar-->
-    <div
-      id="sidebar"
-      x-data="sidebar()"
-      x-cloak
-      class="
-        fixed
-        top-0
-        left-0
-        h-full
-        bg-muted-100
-        dark:bg-muted-1000
-        transition-all
-        duration-300
-        z-50
-      "
-      :class="[
-        $store.app.isLayoutCompact ? 'w-[80px]' : 'w-[250px]',
-        $store.app.isMobileOpen ? 'translate-x-0 lg:translate-x-0' : '-translate-x-full lg:translate-x-0'
-      ]"
-    >
-      <!--Header-->
-      <div class="w-full h-20 flex items-center justify-between px-6">
-        <a href="{{route('dashboard')}}" class="flex items-center gap-2">
-          <img
-            src="blolgo.png"
-            class="w-14 h-14 dark:invert"
-            alt="App logo"
-            width="48"
-            height="48"
-          />
-          <p>Dashboard</p>
-        </a>
+                        <li class="sidebar-item">
+                        <a href="{{route('dashboard')}}" class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        >
+                            <i class="ti ti-layout-dashboard  text-xl"></i> <span>Dashboard</span>
+                        </a>
+                        </li>
 
-        <!--Fold button-->
-        <button
-          type="button"
-          class="
-            hidden
-            items-center
-            justify-center
-            w-10
-            h-10
-            mask mask-blob
-            hover:bg-muted-200
-            dark:hover:bg-muted-800
-            text-muted-700
-            dark:text-muted-400
-            transition-colors
-            duration-300
-            cursor-pointer
-          "
-          :class="$store.app.isLayoutCompact ? 'hidden' : 'lg:flex'"
-          @click="foldSidebar()"
-        >
-          <i class="iconify w-5 h-5" data-icon="ph:dots-nine-duotone"></i>
-        </button>
+                        <li class="text-xs font-bold mb-4 mt-8">
+                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                        <span>ACTIONS</span>
+                        </li>
 
-        <!--Mobile button-->
-        <button
-          type="button"
-          class="
-            flex
-            lg:hidden
-            items-center
-            justify-center
-            w-10
-            h-10
-            mask mask-blob
-            hover:bg-muted-200
-            dark:hover:bg-muted-800
-            text-muted-700
-            dark:text-muted-400
-            transition-colors
-            duration-300
-            cursor-pointer
-          "
-          @click="$store.app.isMobileOpen = false"
-        >
-          <i class="iconify w-5 h-5" data-icon="lucide:arrow-left"></i>
-        </button>
-      </div>
+                        <li class="sidebar-item">
+                        <a href="{{route('profile.transactions')}}" class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        >
+                            <i class="ti ti-article  text-xl"></i> <span>Transactions</span>
+                        </a>
+                        </li>
 
+                        <li class="sidebar-item">
+                        <a href="{{route('profile.payments')}}" class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        >
+                            <i class="ti ti-alert-circle  text-xl"></i> <span>Payments</span>
+                        </a>
+                        </li>
 
-      <!--Body-->
-      <div
-        class="
-          relative
-          h-[calc(100%_-_10rem)]
-          w-full
-          overflow-y-auto
-          slimscroll
-          py-6
-        "
-        :class="$store.app.isLayoutCompact ? 'px-4' : 'px-6'"
-      >
-        <!--Menu-->
-        <ul id="sidebar-menu" class="space-y-3">
-          <!--Menu item-->
-          <li>
-            <a
-              href="{{route('dashboard')}}"
-              class="
-                flex
-                items-center
-                gap-4
-                py-3
-                rounded-lg
-                text-muted-500
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                hover:text-muted-600
-                dark:hover:text-muted-200
-                transition-colors
-                duration-300
-              "
-              :class="$store.app.isLayoutCompact ? 'px-1 justify-center' : 'px-4'"
-            >
-              <i class="iconify w-6 h-6" data-icon="ph:gauge-duotone"></i>
-              <span
-                class="font-sans text-sm"
-                :class="$store.app.isLayoutCompact ? 'hidden' : 'block'"
-              >
-                Dashboard
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="{{route('profile.transactions')}}"
-              class="
-                flex
-                items-center
-                gap-4
-                py-3
-                rounded-lg
-                text-muted-500
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                hover:text-muted-600
-                dark:hover:text-muted-200
-                transition-colors
-                duration-300
-              "
-              :class="$store.app.isLayoutCompact ? 'px-1 justify-center' : 'px-4'"
-            >
-              <i
-                class="iconify w-6 h-6"
-                data-icon="ph:arrows-left-right-duotone"
-              ></i>
-              <span
-                class="font-sans text-sm"
-                :class="$store.app.isLayoutCompact ? 'hidden' : 'block'"
-              >
-                Transactions
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="{{route('profile.payments')}}"
-              class="
-                flex
-                items-center
-                gap-4
-                py-3
-                rounded-lg
-                text-muted-500
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                hover:text-muted-600
-                dark:hover:text-muted-200
-                transition-colors
-                duration-300
-              "
-              :class="$store.app.isLayoutCompact ? 'px-1 justify-center' : 'px-4'"
-            >
-              <i class="iconify w-6 h-6" data-icon="ph:check-duotone"></i>
-              <span
-                class="font-sans text-sm"
-                :class="$store.app.isLayoutCompact ? 'hidden' : 'block'"
-              >
-                Payments
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="{{route('profile.cards')}}"
-              class="
-                flex
-                items-center
-                gap-4
-                py-3
-                rounded-lg
-                text-muted-500
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                hover:text-muted-600
-                dark:hover:text-muted-200
-                transition-colors
-                duration-300
-              "
-              :class="$store.app.isLayoutCompact ? 'px-1 justify-center' : 'px-4'"
-            >
-              <i class="iconify w-6 h-6" data-icon="ph:credit-card-duotone"></i>
-              <span
-                class="font-sans text-sm"
-                :class="$store.app.isLayoutCompact ? 'hidden' : 'block'"
-              >
-                Cards
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="{{route('profile.account')}}"
-              class="
-                flex
-                items-center
-                gap-4
-                py-3
-                rounded-lg
-                text-muted-500
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                hover:text-muted-600
-                dark:hover:text-muted-200
-                transition-colors
-                duration-300
-              "
-              :class="$store.app.isLayoutCompact ? 'px-1 justify-center' : 'px-4'"
-            >
-              <i class="iconify w-6 h-6" data-icon="ph:infinity-duotone"></i>
-              <span
-                class="font-sans text-sm"
-                :class="$store.app.isLayoutCompact ? 'hidden' : 'block'"
-              >
-                Account
-              </span>
-            </a>
-          </li>
+                        <li class="sidebar-item">
+                        <a href="{{route('profile.account')}}" class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        >
+                            <i class="ti ti-cards  text-xl"></i> <span>Accounts</span>
+                        </a>
+                        </li>
 
-        </ul>
-      </div>
+                        <li class="sidebar-item">
+                        <a href="{{route('profile.fund')}}" class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                        >
+                            <i class="ti ti-file-description  text-xl"></i> <span>Fund Account</span>
+                        </a>
+                        </li>
 
+                        <li class="text-xs font-bold mb-4 mt-8">
+                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                        <span>AUTH</span>
+                        </li>
 
-      <!--Footer-->
-      <div
-        class="w-full h-20 flex items-center justify-between"
-        :class="$store.app.isLayoutCompact ? 'px-2' : 'px-6'"
-       >
-        <!--Account menu-->
-        <div
-          x-data="dropdown()"
-          class="relative w-full h-20 flex items-center justify-between"
-          @click.away="close()"
-        >
-          <!--Dropdown button-->
-          <button type="button" class="w-full flex items-center gap-2" @click="open()">
-            <img
-              class="w-10 h-10 rounded-full"
-              :class="$store.app.isLayoutCompact ? 'mx-auto' : 'mx-0'"
-              src="blolgo.png"
-              alt="User photo"
-              width="40"
-              height="40"
-            />
-            <span :class="$store.app.isLayoutCompact ? 'hidden' : 'block'">
-              <h5 class="font-heading font-semibold text-muted-600 dark:text-muted-200">
-                {{ Auth::user()->name }}
-              </h5>
-            </span>
-            <i
-              class="
-                iconify
-                w-5
-                h-5
-                ml-auto
-                text-muted-400
-                transition-transform
-                duration-300
-              "
-              :class="[
-                $store.app.isLayoutCompact ? 'hidden' : 'block',
-                isOpen ? 'rotate-180' : ''
-              ]"
-              data-icon="lucide:chevron-up"
-            ></i>
-          </button>
-
-          <!--Dropdown menu-->
-          <div
-            x-cloak
-            x-show="isOpen"
-            x-transition
-            class="
-              absolute
-              -top-80
-              -left-2
-              w-[240px]
-              overflow-y-auto
-              slimscroll
-              p-2
-              rounded-lg
-              bg-white
-              dark:bg-muted-900
-              border border-muted-200
-              dark:border-muted-800
-              shadow-2xl shadow-muted-400/20
-              dark:shadow-muted-800/10
-              z-20
-            "
-          >
-            <!--Header-->
-            <div
-              class="
-                flex
-                items-center
-                gap-x-2
-                py-4
-                px-6
-                border-b border-muted-200
-                dark:border-muted-700
-              "
-            >
-              <div class="relative flex items-center justify-center h-12 w-12">
-                <img
-                  src="blolgo.png"
-                  class="w-full h-full object-cover rounded-full"
-                  alt="Profile image"
-                  width="48"
-                  height="48"
-                />
-              </div>
-              <h3
-                class="
-                  font-sans
-                  text-sm
-                  font-medium
-                  uppercase
-                  text-muted-500
-                  dark:text-muted-200
-                "
-              >
-                Hi, {{ Auth::user()->name }}
-              </h3>
-            </div>
-            <ul class="space-y-1 pt-2">
-              <li>
-                <a
-                  href="documents.html"
-                  class="
-                    flex
-                    items-center
-                    gap-3
-                    p-2
-                    rounded-lg
-                    text-muted-400
-                    hover:text-primary-500 hover:bg-muted-100
-                    dark:hover:bg-muted-800
-                    transition-colors
-                    duration-300
-                  "
-                >
-                  <i class="iconify w-5 h-5" data-icon="ph:folder-duotone"></i>
-                  <div class="font-sans">
-                    <h5
-                      class="text-xs font-semibold text-muted-800 dark:text-muted-200"
-                    >
-                      Send
-                    </h5>
-                    <p class="text-xs text-muted-400">Send some money</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="offers.html"
-                  class="
-                    flex
-                    items-center
-                    gap-3
-                    p-2
-                    rounded-lg
-                    text-muted-400
-                    hover:text-primary-500 hover:bg-muted-100
-                    dark:hover:bg-muted-800
-                    transition-colors
-                    duration-300
-                  "
-                >
-                  <i class="iconify w-5 h-5" data-icon="ph:gift-duotone"></i>
-                  <div class="font-sans">
-                    <h5
-                      class="text-xs font-semibold text-muted-800 dark:text-muted-200"
-                    >
-                      Receive
-                    </h5>
-                    <p class="text-xs text-muted-400">Add or receive funds</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="settings.html"
-                  class="
-                    flex
-                    items-center
-                    gap-3
-                    p-2
-                    rounded-lg
-                    text-muted-400
-                    hover:text-primary-500 hover:bg-muted-100
-                    dark:hover:bg-muted-800
-                    transition-colors
-                    duration-300
-                  "
-                >
-                  <i class="iconify w-5 h-5" data-icon="ph:gear-six-duotone"></i>
-                  <div class="font-sans">
-                    <h5
-                      class="text-xs font-semibold text-muted-800 dark:text-muted-200"
-                    >
-                      Settings
-                    </h5>
-                    <p class="text-xs text-muted-400">Manage preferences</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="
-                    flex
-                    items-center
-                    gap-3
-                    p-2
-                    rounded-lg
-                    text-muted-400
-                    hover:text-primary-500 hover:bg-muted-100
-                    dark:hover:bg-muted-800
-                    transition-colors
-                    duration-300
-                    cursor-pointer
-                  "
-                  :href="route('logout')"
-                  onclick="event.preventDefault();
+                        <li class="sidebar-item">
+                        <a :href="route('logout')" class="sidebar-link gap-3 py-2 px-3 cursor-pointer rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
+                         onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">
-                  <i class="iconify w-5 h-5" data-icon="ph:sign-out-duotone"></i>
-                  <div class="font-sans">
-                    <h5
-                      class="text-xs font-semibold text-muted-800 dark:text-muted-200"
-                    >
-                      Logout
-                    </h5>
-                    <p class="text-xs text-muted-400">Logout from account</p>
-                  </div>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+                            <i class="ti ti-login  text-xl"></i> <span>Logout</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        </li>
 
-    <!--Site panel-->
-    <div
-      x-cloak
-      class="
-        fixed
-        top-0
-        right-0
-        h-full
-        w-[280px]
-        bg-white
-        dark:bg-muted-1000
-        shadow-2xl shadow-muted-400/20
-        dark:shadow-muted-800/20
-        transition-all
-        duration-300
-        z-40
-      "
-      :class="[
-        $store.app.isPanelOpen ? 'translate-x-0' : 'translate-x-full'
-      ]"
-    >
-      <!--Header-->
-      <div
-        class="
-          w-full
-          h-20
-          flex
-          items-center
-          justify-between
-          px-6
-          border-b border-muted-200
-          dark:border-muted-900
-        "
-      >
-        <h3
-          class="
-            font-heading font-semibold
-            uppercase
-            text-xs text-muted-500
-            dark:text-muted-100
-          "
-        >
-          Action Bar
-        </h3>
+                        <li class="text-xs font-bold mb-4 mt-8">
+                        <i class="ti ti-dots nav-small-cap-icon text-lg hidden text-center"></i>
+                        <span>EXTRA</span>
+                        </li>
 
-        <!--Close button-->
-        <button
-          type="button"
-          class="
-            flex
-            items-center
-            justify-center
-            w-10
-            h-10
-            mask mask-blob
-            hover:bg-muted-100
-            dark:hover:bg-muted-800
-            text-muted-700
-            dark:text-muted-400
-            transition-colors
-            duration-300
-            cursor-pointer
-          "
-          @click="$store.app.isPanelOpen = false"
-        >
-          <i class="iconify w-4 h-4" data-icon="ph:arrow-right-duotone"></i>
-        </button>
-      </div>
-      <!--Body-->
-      <div
-        class="relative h-[calc(100%_-_5rem)] w-full overflow-y-auto slimscroll p-6"
-      >
-        <!--Placeholder-->
-        <div class="py-6">
-          <h4 class="font-heading text-muted-700 dark:text-muted-200">
-            No action items.
-          </h4>
-          <p class="font-sans text-sm text-muted-400">
-            It seems everything is up to date.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <main
-      x-cloak
-      class="relative w-full overflow-hidden transition-all duration-300 z-10"
-      :class="$store.app.isLayoutCompact ? 'ml-0 lg:w-[calc(100%_-_80px)] lg:ml-[80px]' : 'ml-0 lg:w-[calc(100%_-_250px)] lg:ml-[250px]'"
-    >
-      <!--Container-->
-      <div
-        class="
-          w-full
-          max-w-5xl
-          min-h-screen
-          mx-auto
-          px-4
-          md:px-6
-          bg-white
-          dark:bg-muted-900
-        "
-      >
-        <!--Site navbar-->
-        <div class="w-full flex items-center justify-between gap-6 py-4">
-          <div class="flex items-center gap-4 grow max-w-md">
-            <!--Expand sidebar button-->
-            <button
-              type="button"
-              class="
-                items-center
-                justify-center
-                w-10
-                h-10
-                mask mask-blob
-                hover:bg-muted-200
-                dark:hover:bg-muted-800
-                text-muted-700
-                dark:text-muted-400
-                transition-colors
-                duration-300
-                cursor-pointer
-              "
-              :class="$store.app.isLayoutCompact ? 'lg:flex' : 'hidden'"
-              @click="$store.app.isLayoutCompact = false"
-            >
-              <i class="iconify w-5 h-5" data-icon="ph:dots-nine-duotone"></i>
-            </button>
-
-            <!--Mobile menu-->
-            <button
-              type="button"
-              class="
-                flex
-                lg:hidden
-                items-center
-                justify-center
-                w-10
-                h-10
-                mask mask-blob
-                hover:bg-muted-200
-                dark:hover:bg-muted-900
-                text-muted-700
-                dark:text-muted-400
-                transition-colors
-                duration-300
-                cursor-pointer
-              "
-              @click="$store.app.isMobileOpen = true"
-            >
-              <i class="iconify w-5 h-5" data-icon="ph:dots-nine-duotone"></i>
-            </button>
-            <!--Search-->
-            <div
-              x-data="search()"
-              class="hidden md:block relative w-full rounded-md shadow-sm"
-            >
-              <!--Input-->
-              <div class="relative group">
-                <input
-                  id="navbar-search-field"
-                  x-model="searchTerms"
-                  x-on:keyup="searchData()"
-                  class="
-                    w-full
-                    h-10
-                    bg-muted-100
-                    dark:bg-muted-1000
-                    rounded-lg
-                    border border-transparent
-                    focus:border-muted-200
-                    dark:border-muted-800 dark:focus:border-muted-700
-                    focus:bg-white
-                    dark:focus:bg-muted-900
-                    focus:shadow-xl focus:shadow-muted-400/10
-                    dark:focus:shadow-muted-800/10
-                    placeholder:text-muted-300
-                    dark:placeholder:text-muted-700
-                    text-base text-muted-600
-                    dark:text-muted-200
-                    pl-10
-                    pr-4
-                    py-2
-                    transition-all
-                    duration-300
-                    tw-accessibility
-                  "
-                  placeholder="Search for anything..."
-                  type="text"
-                />
-                <button
-                  type="button"
-                  class="
-                    absolute
-                    top-0
-                    left-0
-                    h-10
-                    w-10
-                    flex
-                    justify-center
-                    items-center
-                    text-muted-400
-                    dark:text-muted-600
-                    group-focus-within:text-primary-500
-                    transition-colors
-                    duration-300
-                    cursor-pointer
-                  "
-                >
-                  <i class="iconify w-4 h-4" data-icon="lucide:search"></i>
-                </button>
-                <!--Empty button-->
-                <button
-                  type="button"
-                  class="
-                    absolute
-                    top-0
-                    right-0
-                    h-10
-                    w-10
-                    flex
-                    justify-center
-                    items-center
-                    text-muted-400
-                    hover:text-muted-700
-                    dark:hover:text-muted-100
-                    transition-colors
-                    duration-300
-                    cursor-pointer
-                  "
-                  :class="searchTerms === '' ? 'hidden' : 'block'"
-                  @click="closeSearch()"
-                >
-                  <i class="iconify w-4 h-4" data-icon="lucide:x"></i>
-                </button>
-              </div>
-
-              <!--Results-->
-              <div
-                id="search-results"
-                class="
-                  hidden
-                  absolute
-                  top-12
-                  left-0
-                  w-full
-                  max-h-[240px]
-                  overflow-y-auto
-                  slimscroll
-                  p-2
-                  rounded-lg
-                  bg-white
-                  dark:bg-muted-900
-                  border border-muted-200
-                  dark:border-muted-800
-                  shadow-2xl shadow-muted-400/20
-                  dark:shadow-muted-800/10
-                  transition-all
-                  duration-300
-                  z-[90]
-                "
-              ></div>
-            </div>
-          </div>
-
-          <div class="flex items-center gap-x-4">
-            <!--Theme toggler-->
-            <label
-              class="
-                relative
-                block
-                h-6
-                w-14
-                bg-muted-200
-                dark:bg-muted-700
-                rounded-full
-                scale-[0.8]
-              "
-            >
-              <input
-                class="
-                  peer
-                  absolute
-                  top-0
-                  left-0
-                  w-full
-                  h-full
-                  opacity-0
-                  cursor-pointer
-                  z-10
-                "
-                type="checkbox"
-                :checked="$store.app.isDark"
-                @click="toggleTheme()"
-              />
-              <span
-                class="
-                  absolute
-                  -top-2
-                  -left-1
-                  flex
-                  items-center
-                  justify-center
-                  h-10
-                  w-10
-                  bg-white
-                  dark:bg-muted-900
-                  border border-muted-200
-                  dark:border-muted-800
-                  rounded-full
-                  -ml-1
-                  peer-checked:ml-[45%] peer-checked:rotate-[360deg]
-                  transition-all
-                  duration-300
-                "
-              >
-                <i
-                  class="iconify w-6 h-6 text-yellow-400 fill-current"
-                  data-icon="heroicons-solid:sun"
-                  x-show="!$store.app.isDark"
-                ></i>
-                <i
-                  class="iconify w-6 h-6 text-yellow-400 fill-current"
-                  data-icon="pepicons:moon-filled"
-                  x-show="$store.app.isDark"
-                ></i>
-              </span>
-            </label>
-
-            <!--Money dropdown-->
-            <div x-data="dropdown()" class="relative" @click.away="close()">
-              <button
-                type="button"
-                class="
-                  h-10
-                  inline-flex
-                  justify-center
-                  items-center
-                  gap-x-2
-                  px-6
-                  py-2
-                  font-sans
-                  text-sm text-white
-                  bg-primary-500
-                  rounded-full
-                  shadow-lg shadow-primary-500/20
-                  hover:shadow-xl
-                  tw-accessibility
-                  transition-all
-                  duration-300
-                "
-                @click="open()"
-              >
-                <span>Move Money</span>
-                <i
-                  class="iconify w-4 h-4 transition-transform duration-300"
-                  :class="isOpen ? 'rotate-180' : ''"
-                  data-icon="lucide:chevron-down"
-                ></i>
-              </button>
-
-              <!--Dropdown menu-->
-              <div
-                x-cloak
-                x-show="isOpen"
-                x-transition
-                class="
-                  absolute
-                  top-11
-                  right-0
-                  w-[240px]
-                  overflow-y-auto
-                  slimscroll
-                  p-2
-                  rounded-lg
-                  bg-white
-                  dark:bg-muted-900
-                  border border-muted-200
-                  dark:border-muted-800
-                  shadow-2xl shadow-muted-400/20
-                  dark:shadow-muted-800/10
-                  z-20
-                "
-              >
-                <ul class="space-y-1">
-                  <li>
-                    <a
-                      href="payments-send.html"
-                      class="
-                        flex
-                        items-center
-                        gap-3
-                        p-2
-                        rounded-lg
-                        text-muted-400
-                        hover:text-primary-500 hover:bg-muted-100
-                        dark:hover:bg-muted-800
-                        transition-colors
-                        duration-300
-                      "
-                    >
-                      <i class="iconify w-5 h-5" data-icon="ph:arrow-right-duotone"></i>
-                      <div class="font-sans">
-                        <h5
-                          class="text-sm font-semibold text-muted-800 dark:text-muted-200"
+                        <li class="sidebar-item">
+                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
                         >
-                          Send
-                        </h5>
-                        <p class="text-xs text-muted-400">Send someone money</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="payments-receive.html"
-                      class="
-                        flex
-                        items-center
-                        gap-3
-                        p-2
-                        rounded-lg
-                        text-muted-400
-                        hover:text-primary-500 hover:bg-muted-100
-                        dark:hover:bg-muted-800
-                        transition-colors
-                        duration-300
-                      "
-                    >
-                      <i class="iconify w-5 h-5" data-icon="ph:arrow-left-duotone"></i>
-                      <div class="font-sans">
-                        <h5
-                          class="text-sm font-semibold text-muted-800 dark:text-muted-200"
+                            <i class="ti ti-mood-happy  text-xl"></i> <span>Icons</span>
+                        </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md w-full flex items-center hover:text-blue-600 hover:bg-blue-500"
                         >
-                          Receive
-                        </h5>
-                        <p class="text-xs text-muted-400">Add or receive funds</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="cards.html"
-                      class="
-                        flex
-                        items-center
-                        gap-3
-                        p-2
-                        rounded-lg
-                        text-muted-400
-                        hover:text-primary-500 hover:bg-muted-100
-                        dark:hover:bg-muted-800
-                        transition-colors
-                        duration-300
-                      "
-                    >
-                      <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                      <div class="font-sans">
-                        <h5
-                          class="text-sm font-semibold text-muted-800 dark:text-muted-200"
-                        >
-                          Cards
-                        </h5>
-                        <p class="text-xs text-muted-400">Manage your cards</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="accounts.html"
-                      class="
-                        flex
-                        items-center
-                        gap-3
-                        p-2
-                        rounded-lg
-                        text-muted-400
-                        hover:text-primary-500 hover:bg-muted-100
-                        dark:hover:bg-muted-800
-                        transition-colors
-                        duration-300
-                      "
-                    >
-                      <i class="iconify w-5 h-5" data-icon="ph:wallet-duotone"></i>
-                      <div class="font-sans">
-                        <h5
-                          class="text-sm font-semibold text-muted-800 dark:text-muted-200"
-                        >
-                          Accounts
-                        </h5>
-                        <p class="text-xs text-muted-400">Manage your accounts</p>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                            <i class="ti ti-aperture  text-xl"></i> <span>Sample Page</span>
+                        </a>
+                        </li>
 
-            <!--Panel button-->
-            <button
-              type="button"
-              class="
-                h-10
-                w-10
-                inline-flex
-                justify-center
-                items-center
-                font-sans
-                text-sm text-muted-300
-                dark:text-muted-700
-                hover:text-yellow-400
-                dark:hover:text-yellow-400
-                bg-white
-                dark:bg-muted-1000
-                rounded-full
-                shadow-lg shadow-muted-400/20
-                dark:shadow-muted-800/30
-                hover:shadow-xl
-                tw-accessibility
-                transition-all
-                duration-300
-                tw-accessibility
-              "
-              @click="$store.app.isPanelOpen = true"
-            >
-              <i class="iconify w-5 h-5" data-icon="fluent:flash-28-filled"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Renders the page body -->
-
-        <!--Grid-->
-        <div x-data="dashboard()" class="grid grid-cols-12 gap-6 pt-6 pb-20">
-          <!--Grid item-->
-          <div class="col-span-12 md:col-span-5">
-            <!--Welcome widget-->
-            <div
-              class="
-                h-full
-                p-10
-                bg-white
-                dark:bg-muted-1000
-                rounded-xl
-                border border-muted-200
-                dark:border-muted-800
-                shadow-xl shadow-muted-400/10
-                dark:shadow-muted-800/10
-              "
-            >
-              <div class="h-full flex flex-col justify-between gap-5">
-                <h4 class="font-heading font-semibold text-sm uppercase text-muted-400">
-                    {{ Auth::user()->name }}'s Account
-                </h4>
-
-                <h2
-                  class="
-                    font-heading font-medium
-                    text-4xl
-                    ptablet:text-2xl
-                    text-muted-800
-                    dark:text-white
-                  "
-                >
-                  Welcome back, {{ Auth::user()->name }}! 👋
-                </h2>
-
-                <p class="font-sans text-muted-500">
-                  Everything seems ok and up-to-date with your account since your last
-                  visit. Would you like to fund it?
-                </p>
-
-                <a
-                  href="payments-receive.html"
-                  class="
-                    h-12
-                    max-w-[220px]
-                    inline-flex
-                    justify-center
-                    items-center
-                    gap-x-2
-                    px-6
-                    py-2
-                    font-sans
-                    text-sm text-white
-                    bg-primary-500
-                    rounded-full
-                    shadow-lg shadow-primary-500/20
-                    hover:shadow-xl
-                    tw-accessibility
-                    transition-all
-                    duration-300
-                  "
-                >
-                  <span>Fund my Account</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!--Grid item-->
-          <div class="col-span-12 md:col-span-7">
-            <!--Blance widget-->
-            <div
-              class="
-                bg-white
-                dark:bg-muted-1000
-                rounded-xl
-                border border-muted-200
-                dark:border-muted-800
-                shadow-xl shadow-muted-400/10
-                dark:shadow-muted-800/10
-              "
-            >
-              <div class="flex flex-col gap-4 px-8 pt-8 text-center">
-                <h4 class="font-heading font-semibold text-sm uppercase text-muted-400">
-                  Account Balance
-                </h4>
-                <p>
-                  <span
-                    class="
-                      font-sans font-medium
-                      text-4xl text-muted-800
-                      dark:text-white
-                      before:content-['$'] before:text-xl
-                    "
-                  >
-                    9,543.12
-                  </span>
-                </p>
-                <div class="flex items-center justify-center gap-x-2">
-                  <i
-                    class="iconify w-4 h-4 text-success-500"
-                    data-icon="lucide:arrow-up"
-                  ></i>
-                  <span class="font-sans text-sm text-muted-400">
-                    $149.32 Today, Sep 25
-                  </span>
+                    </ul>
+                    </nav>
                 </div>
-              </div>
-              <div id="balance-chart"></div>
-            </div>
-          </div>
-
-          <!--Grid item-->
-          <div class="col-span-12 md:col-span-6">
-            <!--Blance widget-->
-            <div
-              class="
-                h-full
-                py-16
-                px-10
-                bg-white
-                dark:bg-muted-1000
-                rounded-xl
-                border border-muted-200
-                dark:border-muted-800
-                shadow-xl shadow-muted-400/10
-                dark:shadow-muted-800/10
-              "
-            >
-              <div class="h-full flex flex-col justify-between gap-7">
-                <h4 class="font-heading font-semibold text-sm uppercase text-muted-400">
-                  Money out last 30 days
-                </h4>
-
-                <div>
-                  <span
-                    class="
-                      font-sans font-medium
-                      text-4xl text-muted-800
-                      dark:text-white
-                      before:content-['$'] before:text-xl
-                    "
-                  >
-                    0.00
-                  </span>
                 </div>
 
-                <div class="space-y-1">
-                  <p class="font-sans text-muted-500">No outgoing transactions yet</p>
-                  <div class="w-full h-1 bg-muted-200 dark:bg-muted-800"></div>
+                <!-- Bottom Upgrade Option -->
+                <div class="m-6  relative">
+                    <div class="bg-blue-500 p-5 rounded-md flex items-center justify-between">
+                        @if ($user->accounts->isEmpty() && $user->cryptoWallets->isEmpty())
+                            <div>
+                                <h5 class="text-base font-semibold text-gray-700 mb-3">Accounts</h5>
+                                <a href="{{route('profile.account')}}" class="text-xs font-semibold hover:bg-blue-700 text-white bg-blue-600 rounded-md  px-4 py-2">Create</a>
+                                </div>
+                                <div class="-mt-12 -mr-2">
+                                <img src="./assets/images/profile/rocket.png" class="max-w-fit"  alt="profile" />
+                            </div>
+                        @else
+                        <div>
+                            <h5 class="text-base font-semibold text-gray-700 mb-3">Fund Account</h5>
+                            <a href="{{route('profile.fund')}}" class="text-xs font-semibold hover:bg-blue-700 text-white bg-blue-600 rounded-md  px-4 py-2">Fund</a>
+                            </div>
+                            <div class="-mt-12 -mr-2">
+                            <img src="./assets/images/profile/rocket.png" class="max-w-fit"  alt="profile" />
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                <div class="mt-2 text-right">
-                  <a
-                    href="#"
-                    class="
-                      group
-                      inline-flex
-                      items-center
-                      gap-3
-                      text-primary-500
-                      hover:text-primary-400
-                      transition-colors
-                      duration-300
-                    "
-                  >
-                    <span class="font-sans font-medium text-base">View all</span>
-                    <i
-                      class="
-                        iconify
-                        w-4
-                        h-4
-                        group-hover:translate-x-1
-                        transition-transform
-                        duration-300
-                      "
-                      data-icon="lucide:arrow-right"
-                    ></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+                 <!-- </aside> -->
+			</aside>
 
-          <!--Grid item-->
-          <div class="col-span-12 md:col-span-6">
-            <!--Blance widget-->
-            <div
-              class="
-                h-full
-                py-16
-                px-10
-                bg-white
-                dark:bg-muted-1000
-                rounded-xl
-                border border-muted-200
-                dark:border-muted-800
-                shadow-xl shadow-muted-400/10
-                dark:shadow-muted-800/10
-              "
-            >
-              <div class="h-full flex flex-col justify-between gap-7">
-                <h4 class="font-heading font-semibold text-sm uppercase text-muted-400">
-                  Money in last 30 days
-                </h4>
+			<div class=" w-full page-wrapper overflow-hidden">
+				<!--  Header Start -->
+				<header class="container full-container w-full text-sm py-5 xl:px-9 px-5">
+                    <nav class=" w-full bg-gray-800  flex items-center justify-between" aria-label="Global">
+                            <ul class="icon-nav flex items-center gap-4">
+                                <li class="relative xl:hidden">
+                                    <a class="text-xl  icon-hover cursor-pointer text-heading"
+                                        id="headerCollapse" data-hs-overlay="#application-sidebar-brand"
+                                        aria-controls="application-sidebar-brand" aria-label="Toggle navigation" href="javascript:void(0)">
+                                        <i class="ti ti-menu-2 relative z-1"></i>
+                                    </a>
+                                </li>
 
-                <div>
-                  <span
-                    class="
-                      font-sans font-medium
-                      text-4xl text-muted-800
-                      dark:text-white
-                      before:content-['$'] before:text-xl
-                    "
-                  >
-                    0.00
-                  </span>
-                </div>
+                                <li class="relative">
+                                    <div class="hs-dropdown relative inline-flex [--placement:bottom-left] sm:[--trigger:hover]">
+                                        <a class="relative hs-dropdown-toggle inline-flex  icon-hover text-gray-600" href="#">
+                                            <i class="ti ti-bell-ringing text-xl relative z-[1]"></i>
+                                            <div
+                                                class="absolute inline-flex items-center justify-center  text-white text-[11px] font-medium  bg-blue-600 w-2 h-2 rounded-full -top-[1px] -right-[6px]">
+                                            </div>
+                                        </a>
+                                        <div class="card hs-dropdown-menu transition-[opacity,margin] border border-gray-400 rounded-md duration hs-dropdown-open:opacity-100 opacity-0 mt-2 min-w-max  w-[300px] hidden z-[12]"
+                                            aria-labelledby="hs-dropdown-custom-icon-trigger">
+                                            <div>
+                                            <h3 class="text-gray-600 font-semibold text-base px-6 py-3">Notification</h3>
+                                            <ul class="list-none  flex flex-col">
+                                                <li>
+                                            <a href="#" class="py-3 px-6 block hover:bg-blue-500">
+                                                <p class="text-sm text-gray-600 font-semibold">Roman Joined the Team!</p>
+                                                <p class="text-xs text-gray-500 font-medium">Congratulate him</p>
+                                            </a>
+                                                </li>
+                                                <li>
+                                                <a href="#" class="py-3 px-6 block hover:bg-blue-500">
+                                                    <p class="text-sm text-gray-600 font-semibold">New message received</p>
+                                                    <p class="text-xs text-gray-500 font-medium">Salma sent you new message</p>
+                                                </a>
+                                                </li>
+                                                <li>
+                                                <a href="#" class="py-3 px-6 block hover:bg-blue-500">
+                                                    <p class="text-sm text-gray-600 font-semibold">New Payment received</p>
+                                                    <p class="text-xs text-gray-500 font-medium">Check your earnings</p>
+                                                </a>
+                                                </li>
+                                                <li>
+                                                <a href="#" class="py-3 px-6 block hover:bg-blue-500">
+                                                    <p class="text-sm text-gray-600 font-semibold">Jolly completed tasks</p>
+                                                    <p class="text-xs text-gray-500 font-medium">Assign her new tasks</p>
+                                                </a>
+                                                </li>
+                                                <li>
+                                                <a href="#" class="py-3 px-6 block hover:bg-blue-500">
+                                                    <p class="text-sm text-gray-600 font-semibold">Roman Joined the Team!</p>
+                                                    <p class="text-xs text-gray-500 font-medium">Congratulate him</p>
+                                                </a>
+                                                </li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="flex items-center gap-4">
+                            <a class="btn font-medium hover:bg-blue-700 py-2" aria-current="page"> {{ Auth::user()->name }}</a>
 
-                <div class="space-y-1">
-                  <p class="font-sans text-muted-500">No incoming transactions yet</p>
-                  <div class="w-full h-1 bg-muted-200 dark:bg-muted-800"></div>
-                </div>
-                <div class="mt-2 text-right">
-                  <a
-                    href="#"
-                    class="
-                      group
-                      inline-flex
-                      items-center
-                      gap-3
-                      text-primary-500
-                      hover:text-primary-400
-                      transition-colors
-                      duration-300
-                    "
-                  >
-                    <span class="font-sans font-medium text-base">View all</span>
-                    <i
-                      class="
-                        iconify
-                        w-4
-                        h-4
-                        group-hover:translate-x-1
-                        transition-transform
-                        duration-300
-                      "
-                      data-icon="lucide:arrow-right"
-                    ></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+                                <div class="hs-dropdown relative inline-flex [--placement:bottom-right] sm:[--trigger:hover]">
+                                    <a class="relative hs-dropdown-toggle cursor-pointer align-middle rounded-full">
+                                        <img class="object-cover w-9 h-9 rounded-full" src="./assets/images/profile/user-1.jpg" alt=""
+                                            aria-hidden="true">
+                                    </a>
+                                    <div class="card hs-dropdown-menu transition-[opacity,margin] border border-gray-400 rounded-[7px] duration hs-dropdown-open:opacity-100 opacity-0 mt-2 min-w-max  w-[200px] hidden z-[12]"
+                                        aria-labelledby="hs-dropdown-custom-icon-trigger">
+                                        <div class="card-body p-0 py-2">
+                                            <a href="javscript:void(0)" class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
+                                                <i class="ti ti-user text-gray-500 text-xl "></i>
+                                                <p class="text-sm text-gray-500">My Profile</p>
+                                            </a>
+                                            <a href="javscript:void(0)" class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
+                                                <i class="ti ti-mail text-gray-500 text-xl"></i>
+                                                <p class="text-sm text-gray-500">My Account</p>
+                                            </a>
+                                            <a href="javscript:void(0)" class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
+                                                <i class="ti ti-list-check text-gray-500 text-xl "></i>
+                                                <p class="text-sm text-gray-500">My Task</p>
+                                            </a>
+                                            <div class="px-4 mt-[7px] grid">
+                                                <a href="../../pages/authentication-login.html" class="btn-outline-primary w-full hover:bg-blue-600 hover:text-white">Logout</a>
+                                            </div>
 
-          <!--Grid item-->
-          <div class="col-span-12 md:col-span-12">
-            <div
-              class="
-                py-4
-                md:py-7
-                px-4
-                md:px-8
-                xl:px-10
-                bg-white
-                dark:bg-muted-1000
-                rounded-xl
-                border border-muted-200
-                dark:border-muted-800
-                shadow-xl shadow-muted-400/10
-                dark:shadow-muted-800/10
-              "
-            >
-              <div class="sm:flex items-center justify-between">
-                <h4 class="font-heading font-semibold text-sm uppercase text-muted-400">
-                  Recent Transactions
-                </h4>
-                <a
-                  href="transactions.html"
-                  class="
-                    group
-                    inline-flex
-                    items-center
-                    gap-3
-                    text-primary-500
-                    hover:text-primary-400
-                    transition-colors
-                    duration-300
-                  "
-                >
-                  <span class="font-sans font-medium text-base">View all</span>
-                  <i
-                    class="
-                      iconify
-                      w-4
-                      h-4
-                      group-hover:translate-x-1
-                      transition-transform
-                      duration-300
-                    "
-                    data-icon="lucide:arrow-right"
-                  ></i>
-                </a>
-              </div>
-              <div class="mt-7 overflow-x-auto">
-                <table class="w-full whitespace-nowrap">
-                  <thead>
-                    <th class="w-1/5"></th>
-                    <th class="w-2/5"></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                  </thead>
-                  <tbody>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 26, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Victoria's Treats
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $52.14
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-info-100
-                            dark:bg-info-500/10
-                            text-info-500
-                          "
-                        >
-                          Processing
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Credit card
-                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </nav>
+				</header>
+				<!--  Header End -->
+
+				<!-- Main Content -->
+				<main class="h-full overflow-y-auto  max-w-full  pt-4">
+					<div class="container full-container py-5 flex flex-col gap-6">
+                        <div class="grid grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 gap-6">
+                            <div class="card overflow-hidden">
+                              <div class="card-body">
+                                    <marquee direction="left" behavior="scroll" scrollamount="3" class="w-full">
+                                        @foreach($currencies as $currency => $rate)
+                                            <span class="inline-block px-4 py-2 bg-white shadow-md rounded-full mr-4">{{ $currency }}: {{ $rate }}</span>
+                                        @endforeach
+                                    </marquee>
+                              </div>
+                            </div>
                         </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 24, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Morgan Seis, LLC
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $428.47
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-success-100
-                            dark:bg-success-500/10
-                            text-success-500
-                          "
-                        >
-                          Complete
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Credit card
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 24, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Wallmart
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $112.23
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-primary-100
-                            dark:bg-primary-500/10
-                            text-primary-500
-                          "
-                        >
-                          In Progress
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:pen-nib-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Cheque
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 21, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          John Rowland
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $950.00
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-warning-100
-                            dark:bg-warning-500/10
-                            text-warning-500
-                          "
-                        >
-                          Cancelled
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i
-                            class="iconify w-5 h-5"
-                            data-icon="ph:arrows-left-right-duotone"
-                          ></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Transfer
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 21, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Harry's, LLC
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $24.49
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-success-100
-                            dark:bg-success-500/10
-                            text-success-500
-                          "
-                        >
-                          Complete
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Credit card
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 18, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Game's Store
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $89.49
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-success-100
-                            dark:bg-success-500/10
-                            text-success-500
-                          "
-                        >
-                          Complete
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Credit card
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 15, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Wallmart
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $143.19
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-success-100
-                            dark:bg-success-500/10
-                            text-success-500
-                          "
-                        >
-                          Complete
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:pen-nib-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Cheque
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                    <!--Row-->
-                    <tr tabindex="0">
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sans
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Sep 14, 2022
-                        </span>
-                      </td>
-                      <td class="py-2">
-                        <span
-                          class="
-                            font-sm
-                            text-sm
-                            font-medium
-                            leading-none
-                            text-muted-500
-                            dark:text-muted-300
-                          "
-                        >
-                          Park Groceries
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            font-sans
-                            text-base
-                            font-medium
-                            leading-none
-                            text-muted-800
-                            dark:text-muted-100
-                          "
-                        >
-                          - $31.22
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="font-sans text-sm font-medium leading-none text-muted-400"
-                        >
-                          xxx4565494
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <span
-                          class="
-                            inline-block
-                            font-sans
-                            text-xs
-                            py-1.5
-                            px-3
-                            m-1
-                            rounded-full
-                            bg-success-100
-                            dark:bg-success-500/10
-                            text-success-500
-                          "
-                        >
-                          Complete
-                        </span>
-                      </td>
-                      <td class="py-2 px-4">
-                        <div class="flex items-center gap-2 text-muted-400">
-                          <i class="iconify w-5 h-5" data-icon="ph:credit-card-duotone"></i>
-                          <span class="font-sans text-sm font-medium leading-none">
-                            Credit card
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-6 gap-x-0 lg:gap-y-0 gap-y-6">
+                                @if ($user->accounts->isEmpty() && $user->cryptoWallets->isEmpty())
+                                    <div class="card">
+                                        <div class="card-body">
+                                        <h3 class="text-lg font-medium text-gray-600 mb-2">
+                                            You currently have no accounts
+                                        </h3>
+                                        <p class="text-sm text-gray-500 pe-10">
+                                            Create an account to perform different transactions. You can manage your
+                                            accounts from here once you've added one.
+                                        </p>
+                                        <a href="{{route('profile.account')}}" class="mt-4 py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 " href="#">
+                                            Accounts
+                                        </a>
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="flex gap-6 items-center justify-between">
+                                        <div class="flex flex-col gap-5">
+                                            <h4 class="text-gray-600 text-lg font-semibold">Account Balance</h4>
+                                            <div class="flex flex-col gap-[18px]">
+                                            <h3 class="text-[21px] font-semibold text-gray-600">$6,820</h3>
+                                            <div class="flex items-center gap-1">
+                                            <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-400">
+                                                <i class="ti ti-arrow-down-right text-red-500"></i>
+                                            </span>
+                                            <p class="text-gray-600 text-sm font-normal ">+9%</p>
+                                            <p class="text-gray-500 text-sm font-normal">last year</p>
+                                            </div>
+                                        </div>
+                                        </div>
 
-        <!--End Layout-->
-      </div>
-    </main>
+                                            <div class="w-11 h-11 flex justify-center items-center rounded-full bg-cyan-500 text-white self-start">
+                                                <i class="ti ti-currency-dollar text-xl"></i>
+                                            </div>
 
-    <!--Back to top button-->
-    <div
-      class="
-        backtotop
-        hidden
-        md:block
-        fixed
-        bottom-8
-        right-8
-        w-12
-        h-12
-        rounded-full
-        shadow-lg
-        z-20
-        cursor-pointer
-        transition-all
-        duration-200
-      "
-      x-data="backtotop()"
-      x-init="setup()"
-      x-on:scroll.window="scroll()"
-      x-bind:class="{
-        'opacity-100 visible translate-y-0': scrolled,
-        'opacity-0 invisible translate-y-4': !scrolled,
-      }"
-      x-on:click="scrollTop()"
-    >
-      <svg
-        class="stroke-primary-500 stroke-[4px] transition-all duration-200"
-        width="100%"
-        height="100%"
-        viewBox="-1 -1 102 102"
-      >
-        <path fill="none" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
+                                        </div>
+                                    </div>
+                                    <div id="earning"></div>
+                                </div>
+                                {{-- <div class="card">
+                                    <div class="card-body">
+                                        <div class="flex gap-6 items-center justify-between">
+                                        <div class="flex flex-col gap-5">
+                                            <h4 class="text-gray-600 text-lg font-semibold">Monthly Earnings</h4>
+                                            <div class="flex flex-col gap-[18px]">
+                                            <h3 class="text-[21px] font-semibold text-gray-600">$6,820</h3>
+                                            <div class="flex items-center gap-1">
+                                            <span class="flex items-center justify-center w-5 h-5 rounded-full bg-red-400">
+                                                <i class="ti ti-arrow-down-right text-red-500"></i>
+                                            </span>
+                                            <p class="text-gray-600 text-sm font-normal ">+9%</p>
+                                            <p class="text-gray-500 text-sm font-normal">last year</p>
+                                            </div>
+                                        </div>
+                                        </div>
 
-      <svg
-        class="
-          block
-          absolute
-          top-1/2
-          left-1/2
-          -translate-x-1/2 -translate-y-1/2
-          w-6
-          h-6
-          text-primary-500
-          cursor-pointer
-          z-10
-        "
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="12" y1="19" x2="12" y2="5"></line>
-        <polyline points="5 12 12 5 19 12"></polyline>
-      </svg>
-    </div>
+                                            <div class="w-11 h-11 flex justify-center items-center rounded-full bg-cyan-500 text-white self-start">
+                                                <i class="ti ti-currency-dollar text-xl"></i>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="earning"></div>
+                                </div> --}}
 
 
-  </body>
+
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-1 lg:gap-x-6 gap-x-0 lg:gap-y-0 gap-y-6">
+
+                            <div class="col-span-2">
+                                <div class="card h-full">
+                                    <div class="card-body">
+                                        <h4 class="text-gray-600 text-lg font-semibold mb-6">Recent Transaction</h4>
+                                        <div class="relative overflow-x-auto">
+                                            <!-- table -->
+                                            <table class="text-left w-full whitespace-nowrap text-sm">
+                                                <thead class="text-gray-700">
+                                                    <tr class="font-semibold text-gray-600">
+                                                        <th scope="col" class="p-4">Id</th>
+                                                        <th scope="col" class="p-4">Assigned</th>
+                                                        <th scope="col" class="p-4">Name</th>
+                                                        <th scope="col" class="p-4">Priority</th>
+                                                        <th scope="col" class="p-4">Budget</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="p-4 font-semibold text-gray-600 ">1</td>
+                                                        <td class="p-4">
+                                                            <div class="flex flex-col gap-1">
+                                                                <h3 class=" font-semibold text-gray-600">Sunil Joshi</h3>
+                                                                <span class="font-normal text-gray-500">Web Designer</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-normal  text-gray-500">Elite Admin</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="inline-flex items-center py-[3px] px-[10px] rounded-2xl font-semibold bg-blue-600 text-white">Low</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-semibold text-base text-gray-600">$3.9</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-4 font-semibold text-gray-600 ">2</td>
+                                                        <td class="p-4">
+                                                            <div class="flex flex-col gap-1">
+                                                                <h3 class="font-semibold text-gray-600">Andrew McDownland</h3>
+                                                                <span class="font-normal text-gray-500">Project Manager</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-normal text-gray-500">Real Homes WP Theme</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="inline-flex items-center py-[3px] px-[10px] rounded-2xl font-semibold text-white bg-cyan-500">Medium</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-semibold text-base text-gray-600">$24.5k</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-4 font-semibold text-gray-600 ">3</td>
+                                                        <td class="p-4">
+                                                            <div class="flex flex-col gap-1">
+                                                                <h3 class="font-semibold text-gray-600">Christopher Jamil</h3>
+                                                                <span class="font-normal text-sm text-gray-500">Project Manager</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-normal text-gray-500">MedicalPro WP Theme</span>
+                                                        </td>
+                                                        <td class="p-4 ">
+                                                            <span class="inline-flex items-center py-[3px] px-[10px] rounded-2xl font-semibold text-white bg-red-500">High</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-semibold text-base text-gray-600">$12.8k</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-4 font-semibold text-gray-600 ">4</td>
+                                                        <td class="p-4">
+                                                            <div class="flex flex-col gap-1">
+                                                                <h3 class="font-semibold text-gray-600">Nirav Joshi</h3>
+                                                                <span class="font-normal text-sm text-gray-500">Frontend Engineer</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-normal text-sm text-gray-500">Hosting Press HTML</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="inline-flex items-center py-[3px] px-[10px] rounded-2xl font-semibold text-white bg-teal-500">Critical</span>
+                                                        </td>
+                                                        <td class="p-4">
+                                                            <span class="font-semibold text-base text-gray-600">$2.4k</span>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 gap-6">
+                            <div class="card overflow-hidden">
+                                <div class="relative">
+                                    <a href="javascript:void(0)">
+                                        <img src="./assets/images/products/product-1.jpg" alt="product_img" class="w-full">
+                                    </a>
+                                    <a href="javascript:void(0)" class="bg-blue-600 w-8 h-8 flex justify-center items-center text-white rounded-full absolute bottom-0 right-0 mr-4 -mb-3">
+                                        <i class="ti ti-basket text-base"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-base font-semibold text-gray-600 mb-1">Boat Headphone</h6>
+                                    <div class="flex justify-between">
+                                        <div class="flex gap-2 items-center">
+                                            <h6 class="text-base text-gray-600 font-semibold">$50</h6>
+                                            <span class="text-gray-500 text-sm">
+                                                <del>$65</del>
+                                            </span>
+                                        </div>
+                                        <ul class="list-none flex gap-1">
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden">
+                                <div class="relative">
+                                    <a href="javascript:void(0)">
+                                        <img src="./assets/images/products/product-2.jpg" alt="product_img" class="w-full">
+                                    </a>
+                                    <a href="javascript:void(0)" class="bg-blue-600 w-8 h-8 flex justify-center items-center text-white rounded-full absolute bottom-0 right-0 mr-4 -mb-3">
+                                        <i class="ti ti-basket text-base"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-base font-semibold text-gray-600 mb-1">MacBook Air Pro</h6>
+                                    <div class="flex justify-between">
+                                        <div class="flex gap-2 items-center">
+                                            <h6 class="text-base text-gray-600 font-semibold">$650</h6>
+                                            <span class="text-gray-500 text-sm">
+                                                <del>$900</del>
+                                            </span>
+                                        </div>
+                                        <ul class="list-none flex gap-1">
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden">
+                                <div class="relative">
+                                    <a href="javascript:void(0)">
+                                        <img src="./assets/images/products/product-3.jpg" alt="product_img" class="w-full">
+                                    </a>
+                                    <a href="javascript:void(0)" class="bg-blue-600 w-8 h-8 flex justify-center items-center text-white rounded-full absolute bottom-0 right-0 mr-4 -mb-3">
+                                        <i class="ti ti-basket text-base"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-base font-semibold text-gray-600 mb-1">Red Valvet Dress</h6>
+                                    <div class="flex justify-between">
+                                        <div class="flex gap-2 items-center">
+                                            <h6 class="text-base text-gray-600 font-semibold">$150</h6>
+                                            <span class="text-gray-500 text-sm">
+                                                <del>$200</del>
+                                            </span>
+                                        </div>
+                                        <ul class="list-none flex gap-1">
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden">
+                                <div class="relative">
+                                    <a href="javascript:void(0)">
+                                        <img src="./assets/images/products/product-4.jpg" alt="product_img" class="w-full">
+                                    </a>
+                                    <a href="javascript:void(0)" class="bg-blue-600 w-8 h-8 flex justify-center items-center text-white rounded-full absolute bottom-0 right-0 mr-4 -mb-3">
+                                        <i class="ti ti-basket text-base"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-base font-semibold text-gray-600 mb-1">Cute Soft Teddybear</h6>
+                                    <div class="flex justify-between">
+                                        <div class="flex gap-2 items-center">
+                                            <h6 class="text-base text-gray-600 font-semibold">$285</h6>
+                                            <span class="text-gray-500 text-sm">
+                                                <del>$345</del>
+                                            </span>
+                                        </div>
+                                        <ul class="list-none flex gap-1">
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" >
+                                                <i class="ti ti-star text-yellow-500 text-sm"></i>
+                                            </a>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer>
+                            <p class="text-base text-gray-500 font-normal p-3 text-center">
+                                Design and Developed by <a href="https://newcityfc.com/" target="_blank" class="text-blue-600 underline hover:text-blue-700">NewCityFc</a>
+                            </p>
+                        </footer>
+					</div>
+
+
+				</main>
+				<!-- Main Content End -->
+			</div>
+		</div>
+		<!--end of project-->
+	</main>
+
+
+
+<script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('assets/libs/simplebar/dist/simplebar.min.js')}}"></script>
+<script src="{{asset('assets/libs/iconify-icon/dist/iconify-icon.min.js')}}"></script>
+<script src="{{asset('assets/libs/@preline/dropdown/index.js')}}"></script>
+<script src="{{asset('assets/libs/@preline/overlay/index.js')}}"></script>
+<script src="{{asset('assets/js/sidebarmenu.js')}}"></script>
+
+
+
+	<script src="{{asset('assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{asset('assets/js/dashboard.js')}}"></script>
+</body>
 
 </html>
